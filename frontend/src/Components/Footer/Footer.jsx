@@ -25,7 +25,7 @@ const socialLinks = [
     icon: <AiOutlineInstagram className="group-hover:text-white w-4 h-5" />,
   },
   {
-    path: "https://www.linkedin.com/abhi",
+    path: "https://www.linkedin.com/in/abhishant-rajput/",
     icon: <RiLinkedinFill className="group-hover:text-white w-4 h-5" />,
   },
 ];
@@ -93,7 +93,7 @@ const Footer = () => {
 
             <div className="flex items-center gap-3 mt-3 pl-2 links">
               {socialLinks.map((link, index) => (
-                <Link
+                <Link target="_blank"
                   to={link.path}
                   className="w-9 h-9 border border-solid flex justify-center items-center rounded-full border-[#181A1E] hover:bg-primaryColor hover:border-none"
                   key={index}

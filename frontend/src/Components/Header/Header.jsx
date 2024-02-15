@@ -94,7 +94,7 @@ const Header = () => {
             </div>
 
             <Link to={"/login"}>
-              <button className="bg-primaryColor px-[16px] py-[6px] text-[white] font-[600] h-[44px] tracking-widest flex items-center justify-center cursor-pointer rounded-[30px] hover:invert">
+              <button className="bg-primaryColor px-[18px] py-[7px] text-[white] font-[600] h-[44px] tracking-widest flex items-center justify-center cursor-pointer rounded-[30px] hover:outline hover:bg-white hover:text-primaryColor outline-primaryColor  ">
                 login{" "}
               </button>
             </Link>
