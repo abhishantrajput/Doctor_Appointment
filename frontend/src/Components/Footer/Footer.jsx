@@ -21,7 +21,7 @@ const socialLinks = [
     icon: <AiFillGithub className="group-hover:text-white w-4 h-5" />,
   },
   {
-    path: "https://www.instagram.com/abhi",
+    path: "https://www.instagram.com/instagram",
     icon: <AiOutlineInstagram className="group-hover:text-white w-4 h-5" />,
   },
   {
