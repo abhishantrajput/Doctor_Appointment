@@ -9,7 +9,7 @@ export const authenticate = (req, res, next) => {
   if (!authToken || !authToken.startsWith("Bearer ")) {
     return res.status(400).json({
       success: false,
-      messgae: "No token found",
+      message: "No token found. Access Denied",
     });
   }
 
@@ -21,6 +21,8 @@ export const authenticate = (req, res, next) => {
     const userToken = getUser(token);
 
     // console.log(userToken);
+
+    console.log("user Authenticating.........")
 
     req.userId = userToken._id;
     req.role = userToken.role;

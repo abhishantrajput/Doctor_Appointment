@@ -8,6 +8,9 @@ import Contact from "../Pages/Contact";
 import Doctors from "../Pages/Doctors/Doctors";
 import DoctorsDetails from "../Pages/Doctors/DoctorsDetails";
 import NotPageFound from "../Pages/NotPageFound";
+import MyAccount from "../Dashboard/User-Account/MyAccount";
+import Dashboard from "../Dashboard/Doctor-Account/Dashboard";
+import ProtectRoute from "./ProtectRoute";
 import { Routes, Route } from "react-router-dom";
 
 const Routers = () => {
@@ -20,8 +23,23 @@ const Routers = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="*"  element={<NotPageFound/>}/>
-
+      <Route
+        path="/users/profile/me"
+        element={
+          <ProtectRoute allowedRoles={["patient"]}>
+            <MyAccount />
+          </ProtectRoute>
+        }
+      />
+      <Route
+        path="/doctors/profile/me"
+        element={
+          <ProtectRoute allowedRoles={["doctor"]}>
+            <Dashboard />
+          </ProtectRoute>
+        }
+      />
+      <Route path="*" element={<NotPageFound />} />
     </Routes>
   );
 };

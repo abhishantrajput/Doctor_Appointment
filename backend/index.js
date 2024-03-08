@@ -32,7 +32,6 @@ app.use("/api/v1/users", userRoute);
 app.use("/api/v1/doctors", doctorRoute);
 app.use("/api/v1/reviews", reviewRoute);
 
-
 MongoDB_Connection();
 app.listen(PORT, () => {
   console.log(`Server Connected on Port ${PORT}`);

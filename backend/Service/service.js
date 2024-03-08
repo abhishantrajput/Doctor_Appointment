@@ -11,7 +11,7 @@ export const setUser = (user) => {
 
     process.env.JWT_SECRET_KEY,
     {
-      expiresIn: "1h",
+      expiresIn: "19h",
     }
   );
 };

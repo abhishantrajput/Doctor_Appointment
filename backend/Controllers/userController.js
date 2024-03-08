@@ -1,5 +1,6 @@
 import User from "../models/UserSchema.js";
-
+import Booking from "../models/BookingSchema.js";
+import Doctor from "../models/DoctorSchema.js";
 export const updateUser = async (req, res) => {
   const id = req.params.id;
 
@@ -12,14 +13,13 @@ export const updateUser = async (req, res) => {
 
     return res.status(200).json({
       Success: "true",
-      Message: "user Updated Successfully",
+      message: "user Updated Successfully",
       data: updatedUser,
     });
   } catch (error) {
     return res.status(500).json({
       Success: "False",
-      Message: "User doesn't exist",
-      
+      message: "User doesn't exist",
     });
   }
 };
@@ -31,12 +31,12 @@ export const deleteUser = async (req, res) => {
 
     return res.status(200).json({
       Success: "true",
-      Message: "user Deleted Successfully",
+      message: "user Deleted Successfully",
     });
   } catch (error) {
     return res.status(500).json({
       Success: "False",
-      Message: "User Failed to Delete",
+      message: "User Failed to Delete",
     });
   }
 };
@@ -46,17 +46,15 @@ export const singleUserFind = async (req, res) => {
   try {
     const user = await User.findById(id).select("-password");
 
-
-
     return res.status(200).json({
       Success: "true",
-      Message: "user Found Successfully",
+      message: "user Found Successfully",
       data: user,
     });
   } catch (error) {
     return res.status(500).json({
       Success: "False",
-      Message: "No user Could not be found",
+      message: "No user Could not be found",
     });
   }
 };
@@ -66,13 +64,70 @@ export const allUsersFind = async (req, res) => {
 
     return res.status(200).json({
       Success: "true",
-      Message: "users Found Successfully",
+      message: "users Found Successfully",
       data: users,
     });
   } catch (error) {
     return res.status(500).json({
       Success: "False",
-      Message: "No user Could not be found",
+      message: "No user Could not be found",
+    });
+  }
+};
+
+export const getUserProfile = async (req, res) => {
+  const userId = req.userId;
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+
+        message: "user not Found",
+      });
+    }
+
+    const { password, ...rest } = user._doc;
+
+    return res.status(200).json({
+      success: true,
+      message: "profile info in getting Ready",
+      data: { ...rest },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+
+      message: "Internal Server Error",
+    });
+  }
+};
+
+export const getMyAllAppointments = async (req, res) => {
+  try {
+    // Step 1 : Retrieve Appointments form the Booking Model
+
+    const bookings = await Booking.find({ user: req.userId });
+
+    // Step 2 : Extract doctorsId from Appointments  Booking
+
+    const doctorIDS = bookings.map((el) => el.doctor.id);
+    // Step 3: Extract doctors using Extracted DoctorID's
+
+    const doctors = await Doctor.find({ _id: { $in: doctorIDS } }).select(
+      "-password"
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Appointments are getting...",
+      data: doctors,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "something went Wrong",
     });
   }
 };

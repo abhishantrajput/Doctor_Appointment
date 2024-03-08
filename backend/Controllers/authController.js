@@ -18,7 +18,7 @@ export const Register = async (req, res) => {
 
     if (user) {
       return res.status(400).json({
-        Message: "User already Exists",
+        message: "User already Exists",
       });
     }
 
@@ -56,12 +56,19 @@ export const Register = async (req, res) => {
   } catch (error) {}
   return res.status(500).json({
     success: false,
-    message: "Some Error got Occured, try Again",
+    message: "Some Error has Occured, try Again",
   });
 };
 
 export const Login = async (req, res) => {
   const { email, password } = req.body;
+
+  if (email === "" || password === "") {
+    return res.status(400).json({
+      success: false,
+      message: "Please Enter the Credentials",
+    });
+  }
 
   try {
     let user = null;
@@ -69,7 +76,6 @@ export const Login = async (req, res) => {
     const patient = await User.findOne({ email });
     const doctor = await Doctor.findOne({ email });
 
-    
     if (patient) {
       user = patient;
     }
@@ -81,38 +87,42 @@ export const Login = async (req, res) => {
     if (!user) {
       return res.status(400).json({
         sucesss: false,
-        Message: "User Does not Exist",
+        message: "User Does not Exist",
       });
     }
 
-    const isPasswordMatch = bcrypt.compare(password, user.password);
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
 
     if (!isPasswordMatch) {
       return res.status(400).json({
         sucesss: false,
-        Message: "Password Invalid! Please Enter again",
+        message: "Password Invalid! Please Enter again",
       });
     }
 
     const token = setUser(user);
     // console.log(token);
 
+    const {
+      email: userEmail,
+      password: userPassword,
+      role,
 
-    const {email:userEmail, password: userPassword, role, ...rest} = user._doc
-
+      ...rest
+    } = user._doc;
 
     return res.json({
-      message: "Logged Successfully",
+      message: "You have successfully logged In!",
       token: token,
+      role: role,
       data: {
-        ...rest
-      }
+        ...rest,
+      },
     });
   } catch (error) {
     return res.status(500).json({
       sucesss: false,
       Message: "Try again",
-     
     });
   }
 };

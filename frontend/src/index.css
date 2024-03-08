@@ -14,7 +14,7 @@
   }
 
   .btn {
-    @apply bg-primaryColor py-[15px] px-[25px] rounded-[30px] box-border text-white font-[600] mt-[38px] tracking-widest hover:bg-white hover:text-primaryColor  hover:outline hover:outline-primaryColor transition ease-in-out duration-200;
+    @apply bg-primaryColor py-[15px] px-[25px] rounded-[30px] box-border text-white font-[600] mt-[38px] tracking-widest hover:bg-white hover:text-primaryColor outline-[1px]  hover:outline hover:outline-primaryColor transition ease-in-out duration-200;
   }
 
   .heading {

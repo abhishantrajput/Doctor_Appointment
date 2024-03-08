@@ -1,9 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import UserImage from "../../assets/images/avatar-icon.png";
 import { BiMenu } from "react-icons/bi";
+import { authContext } from "../../context/authContext";
+import Logo from "../../assets/MedConnect_Logo.png";
 
-import Logo from "../../assets/MedConnect_Logo.png"
 
 const navLinks = [
   {
@@ -28,7 +29,9 @@ const Header = () => {
   const headerRef = useRef(null);
   const menuRef = useRef(null);
 
-  const toggleMenu = ()=> menuRef.current.classList.toggle("show__menu")
+  const { user, role, token } = useContext(authContext);
+
+  const toggleMenu = () => menuRef.current.classList.toggle("show__menu");
 
   const handleStickHeader = () => {
     window.addEventListener("scroll", () => {
@@ -43,15 +46,14 @@ const Header = () => {
     });
   };
 
-
-  useEffect(()=>{
+  useEffect(() => {
     handleStickHeader();
 
-    return ()=> window.removeEventListener('scroll',handleStickHeader)
-  })
+    return () => window.removeEventListener("scroll", handleStickHeader);
+  });
 
   return (
-    <header className="header flex items-center" ref={headerRef} >
+    <header className="header flex items-center" ref={headerRef}>
       <div className="container">
         <div className="flex items-center justify-between">
           {/* MedConnect Website Logo */}
@@ -85,19 +87,34 @@ const Header = () => {
           {/* Nav Right */}
 
           <div className="flex items-center gap-4">
-            <div className="hidden">
-              <Link to={"/"}>
-                <figure className="w-[35px] h-[35px] rounded-full cursor-pointer">
-                  <img src={UserImage} alt="User Image" />
-                </figure>
-              </Link>
-            </div>
+            {user && token ? (
+              <div className="">
+                <Link
+                  to={`${
+                    role === "doctor"
+                      ? "/doctors/profile/me"
+                      : "/users/profile/me"
+                  }`}
+                >
 
-            <Link to={"/login"}>
-              <button className="bg-primaryColor px-[18px] py-[7px] text-[white] font-[600] h-[44px] tracking-widest flex items-center justify-center cursor-pointer rounded-[30px] hover:outline hover:bg-white hover:text-primaryColor outline-primaryColor  ">
-                login{" "}
-              </button>
-            </Link>
+                  <div className="flex items-center gap-3">
+
+                  <figure className="w-[35px] h-[35px] rounded-full cursor-pointer overflow-hidden">
+                    <img src={user?.photo} alt="" className="" />
+                  </figure>
+
+                  <h2>{user?.name}</h2>
+                  </div>
+                </Link>
+              </div>
+            ) : (
+              <Link to={"/login"}>
+                <button className="bg-primaryColor px-[18px] py-[7px] text-[white] font-[600] h-[44px] tracking-widest flex items-center justify-center cursor-pointer rounded-[30px] hover:outline hover:bg-white hover:text-primaryColor outline-[1px] outline-primaryColor  ">
+                  login{" "}
+                </button>
+              </Link>
+            )}
+
             <span className="md:hidden" onClick={toggleMenu}>
               <BiMenu className="w-6 h-6" />
             </span>

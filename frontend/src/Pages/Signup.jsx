@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 
 import SignUpImg from "../assets/images/signup.gif";
-import DoctorImg from "../assets/images/doctor-img01.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../config.js";
+
+import uploadImageToCloudnary from "../Utils/uploadCloudnary.js";
+import { toast } from "react-toastify";
+import HashLoader from "react-spinners/HashLoader";
 
 const Signup = () => {
   const [selectedFile, setSelectedFile] = useState(null);
 
   const [previewURL, setPreviewURL] = useState("");
+
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -18,19 +24,54 @@ const Signup = () => {
     role: "patient",
   });
 
+  const navigate = useNavigate();
+
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleFileInputChange = async (e) => {
-    const file = e.target.files[0];
+  const handleFileInputChange = async (event) => {
+    const file = event.target.files[0];
 
-    console.log(file);
+    const data = await uploadImageToCloudnary(file);
+
+    setPreviewURL(data.url);
+    setSelectedFile(data.url);
+    setFormData({ ...formData, photo: data.url });
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${BASE_URL}/auth/register`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify(formData),
+      });
+
+      const { message } = await res.json();
+
+      if (!res.ok) {
+        throw new Error(message);
+      }
+
+      setLoading(false);
+
+      toast.success(message);
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+      toast.error(error);
+
+      setLoading(false);
+    }
   };
+
   return (
     <section className="px-4 xl:transparent">
       <div className="max-w-[1170px] mx-auto">
@@ -120,9 +161,11 @@ const Signup = () => {
               </div>
 
               <div className="mb-5 flex items-center gap-3">
-                <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
-                  <img src={DoctorImg} className="w-full rounded-full" />
-                </figure>
+                {selectedFile && (
+                  <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
+                    <img src={previewURL} className="w-full rounded-full" />
+                  </figure>
+                )}
 
                 <div className="relative w-[170px] h-[50px]">
                   <input
@@ -146,9 +189,14 @@ const Signup = () => {
               <div className="mt-2 text-center">
                 <button
                   type="submit"
+                  disabled={loading}
                   className="btn w-full text-[19px] py-[10px] rounded-none"
                 >
-                  Register
+                  {loading ? (
+                    <HashLoader size={35} color="#ffffff" />
+                  ) : (
+                    "Register"
+                  )}
                 </button>
               </div>
 

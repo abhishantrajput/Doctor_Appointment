@@ -11,12 +11,9 @@ body {
   list-style: none;
 }
 
-.links a:hover{
-
-
+.links a:hover {
   color: white;
 }
-
 
 .sticky__header {
   width: 100%;

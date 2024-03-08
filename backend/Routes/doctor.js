@@ -5,11 +5,12 @@ import {
   allDoctorsFind,
   singleDoctorFind,
   deleteDoctor,
+  getDoctorProfile
 } from "../Controllers/doctorController.js";
 import reviewRouter from "../Routes/review.js";
 import { authenticate, restrictTo } from "../Auth/verifyToken.js";
 
-const router = express.Router({mergeParams: true});
+const router = express.Router();
 
 // ---------------Nested Route----------------------
 
@@ -19,5 +20,6 @@ router.get("/", allDoctorsFind);
 router.get("/:id", singleDoctorFind);
 router.put("/:id", authenticate, restrictTo(["doctor"]), updateDoctor);
 router.delete("/:id", authenticate, restrictTo(["doctor"]), deleteDoctor);
+router.get("/profile/me", authenticate,restrictTo(["dcotor"]),getDoctorProfile)
 
 export default router;
