@@ -104,7 +104,7 @@ const Signup = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[17px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointers"
+                  className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[17px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
                   required
                 />
               </div>
@@ -115,7 +115,7 @@ const Signup = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[17px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointers"
+                  className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[17px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer"
                   required
                 />
               </div>
@@ -126,7 +126,7 @@ const Signup = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[17px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointers"
+                  className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[17px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer"
                   required
                 />
               </div>

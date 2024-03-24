@@ -1,21 +1,57 @@
 import { AiFillStar } from "react-icons/ai";
 
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+
+import HashLoader from "react-spinners/HashLoader.js";
+
+import { BASE_URL, token } from "../../config.js";
+import { toast } from "react-toastify";
 
 const FeedbackForm = () => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [reviewText, setReviewText] = useState("");
-  console.log(reviewText)
+  const [loading, setLoading] = useState(false);
 
+  const { id } = useParams();
 
-  const handleSubmitReview = async(e)=>{
+  const handleSubmitReview = async (e) => {
+    e.preventDefault();
 
-    e.preventDefault()
-  }
+    try {
+      setLoading(true);
 
+      if (!rating && !reviewText) {
+        setLoading(false);
+        return toast.error("Rating and Review fields are required");
+      }
+      const res = await fetch(`${BASE_URL}/doctors/${id}/reviews/`, {
+        method: "post",
 
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
 
+        body: JSON.stringify({ rating, reviewText }),
+      });
+
+      console.log(res);
+
+      const result = await res.json();
+      if (!res.ok) {
+        console.log(result);
+        throw new Error(result.message);
+      }
+
+      setLoading(false);
+      toast.success(result.message);
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.message);
+    }
+  };
 
   return (
     <form>
@@ -60,14 +96,14 @@ const FeedbackForm = () => {
         <textarea
           className="border border-solid border-[#0066ff34] w-full foucs:outline outline-primaryColor px-3 py-4 rounded-md"
           placeholder="Share your thoughts..."
-          onClick={(e)=>setReviewText(e.target.value)}
+          onChange={(e) => setReviewText(e.target.value)}
           rows={5}
         />
       </div>
 
-
-
-      <button type="submit" onClick={handleSubmitReview} className="btn">Submit Feedback</button>
+      <button type="submit" onClick={handleSubmitReview} className="btn">
+        {loading ? <HashLoader size={25} color="#fff" /> : "Submit Feedback"}
+      </button>
     </form>
   );
 };

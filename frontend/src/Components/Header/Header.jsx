@@ -5,7 +5,6 @@ import { BiMenu } from "react-icons/bi";
 import { authContext } from "../../context/authContext";
 import Logo from "../../assets/MedConnect_Logo.png";
 
-
 const navLinks = [
   {
     path: "/",
@@ -96,14 +95,14 @@ const Header = () => {
                       : "/users/profile/me"
                   }`}
                 >
+                  <div className="hidden lg:block">
+                    <div className="flex items-center gap-3">
+                      <figure className="w-[35px] h-[35px] rounded-full cursor-pointer overflow-hidden">
+                        <img src={user?.photo} alt="" className="" />
+                      </figure>
 
-                  <div className="flex items-center gap-3">
-
-                  <figure className="w-[35px] h-[35px] rounded-full cursor-pointer overflow-hidden">
-                    <img src={user?.photo} alt="" className="" />
-                  </figure>
-
-                  <h2>{user?.name}</h2>
+                      <h2>{user?.name}</h2>
+                    </div>
                   </div>
                 </Link>
               </div>

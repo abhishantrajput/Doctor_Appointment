@@ -8,13 +8,19 @@
   }
 }
 
+@layer utilities {
+  .hover_none:hover {
+    @apply bg-none;
+  }
+}
+
 @layer components {
   .container {
     @apply max-w-full w-[1440px] px-5 mx-auto;
   }
 
   .btn {
-    @apply bg-primaryColor py-[15px] px-[25px] rounded-[30px] box-border text-white font-[600] mt-[38px] tracking-widest hover:bg-white hover:text-primaryColor outline-[1px]  hover:outline hover:outline-primaryColor transition ease-in-out duration-200;
+    @apply bg-primaryColor py-[15px] px-[25px] rounded-[30px] box-border text-white font-[600] mt-[38px] tracking-widest;
   }
 
   .heading {

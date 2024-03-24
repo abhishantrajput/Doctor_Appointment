@@ -8,15 +8,15 @@ export const getAllReviews = async (req, res) => {
 
     if (Reviews) {
       return res.status(200).json({
-        Success: true,
-        Message: "Reviews Found Successfully",
-        Reviews: Reviews,
+        success: true,
+        message: "Reviews Found Successfully",
+        reviews: Reviews,
       });
     }
   } catch (error) {
     return res.status(401).json({
-      Success: false,
-      Message: "Reviews not Found ",
+      success: false,
+      message: "Reviews not Found ",
     });
   }
 };
@@ -25,10 +25,10 @@ export const createReview = async (req, res) => {
   if (!req.body.doctor) req.body.doctor = req.params.doctorId;
   if (!req.body.user) req.body.user = req.userId;
 
-  console.log(req.params)
+  console.log(req.params);
 
   console.log(req.body.doctor);
-  console.log(req.body.user);
+  console.log("patient id",req.body.user);
   const newReview = new Review(req.body);
 
   try {

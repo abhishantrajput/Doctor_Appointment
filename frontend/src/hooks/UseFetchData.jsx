@@ -24,6 +24,7 @@ const UseFetchData = (url) => {
 
         setData(result.data);
         setLoading(false);
+        toast.success(result.message);
       } catch (error) {
         setLoading(false);
         setError(error.message);

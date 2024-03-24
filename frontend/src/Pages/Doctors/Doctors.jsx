@@ -1,9 +1,61 @@
-import React from "react";
-import { doctors } from "../../assets/data/doctors";
+import React, { useEffect, useState } from "react";
 import DoctorCard from "../../Components/Doctors/DoctorCard";
 import Testimonial from "../../Components/Testimonial/Testimonial";
 
+import { BASE_URL } from "../../config.js";
+import UseFetchData from "../../hooks/UseFetchData.jsx";
+import Loader from "../../Components/Loader/Loading.jsx";
+import Error from "../../Components/Error/Error.jsx";
+
 const Doctors = () => {
+  // const [query, setQuery] = useState("");
+  // const [debounceQuery, setDebounceQuery] = useState("");
+
+  // const handleSearch = () => {
+  //   setQuery(query.trim());
+  //   console.log("Handle Search");
+  // };
+
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     setDebounceQuery(query);
+  //   }, 700);
+
+  //   return () => clearTimeout(timeout);
+  // }, [query]);
+
+  // const {
+  //   data: doctors,
+  //   error,
+  //   loading,
+  // } = UseFetchData(`${BASE_URL}/doctors?query=${debounceQuery}`);
+
+  const [query, setQuery] = useState("");
+  const [debounceQuery, setDebounceQuery] = useState("");
+
+  const handleSearch = () => {
+    setQuery(query.trim());
+    console.log("Handle Search");
+  };
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebounceQuery(query);
+    }, 700);
+
+    return () => clearTimeout(timeout);
+  }, [query]);
+
+  const {
+    data: doctors,
+    error,
+    loading,
+
+
+  } = UseFetchData(`${BASE_URL}/doctors?query=${debounceQuery}`);
+
+
+  console.log(doctors)
   return (
     <>
       <section className="bg-[#fff9ea]">
@@ -14,10 +66,15 @@ const Doctors = () => {
             <input
               type="search"
               className="py-4 pl-4 pr-2 bg-transparent w-full focus:outline-none cursor-pointer placeholder:text-textColor"
-              placeholder="Search Doctor"
+              placeholder="Search doctor by name or Specialist"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
             />
 
-            <button className="btn mt-0 rounded-[0px] rounded-r-md tracking-widest">
+            <button
+              className="btn mt-0 rounded-[0px] rounded-r-md tracking-widest"
+              onClick={handleSearch}
+            >
               Search
             </button>
           </div>
@@ -26,11 +83,16 @@ const Doctors = () => {
 
       <section>
         <div className="container">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 lg:grid-cols-4">
-            {doctors.map((doctor, index) => (
-              <DoctorCard doctor={doctor} key={index} />
-            ))}
-          </div>
+          {error && <Error errMessage={error} />}
+          {loading && <Loader />}
+
+          {!loading && !error && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 lg:grid-cols-4">
+              {doctors.map((doctor, index) => (
+                <DoctorCard doctor={doctor} key={index} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
       <section>

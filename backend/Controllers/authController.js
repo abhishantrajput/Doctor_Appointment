@@ -24,6 +24,8 @@ export const Register = async (req, res) => {
 
     const salt = await bcrypt.genSalt(10);
 
+    console.log(salt)
+
     const hashpassword = await bcrypt.hash(password, salt);
 
     if (role === "patient") {

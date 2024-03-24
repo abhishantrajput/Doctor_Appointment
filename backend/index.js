@@ -2,7 +2,6 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
-import bcrypt from "bcryptjs";
 import authRoute from "./Routes/auth.js";
 import userRoute from "./Routes/user.js";
 import doctorRoute from "./Routes/doctor.js";

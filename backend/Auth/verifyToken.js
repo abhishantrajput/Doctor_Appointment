@@ -1,10 +1,11 @@
-import jwt from "jsonwebtoken";
+
 import { getUser } from "../Service/service.js";
 import User from "../models/UserSchema.js";
 import Doctor from "../models/DoctorSchema.js";
 
 export const authenticate = (req, res, next) => {
   const authToken = req.headers.authorization;
+  console.log(authToken);
 
   if (!authToken || !authToken.startsWith("Bearer ")) {
     return res.status(400).json({
@@ -22,7 +23,7 @@ export const authenticate = (req, res, next) => {
 
     // console.log(userToken);
 
-    console.log("user Authenticating.........")
+    // console.log("user Authenticating.........")
 
     req.userId = userToken._id;
     req.role = userToken.role;
@@ -44,6 +45,9 @@ export const authenticate = (req, res, next) => {
 
 export const restrictTo = (roles) => async (req, res, next) => {
   const userId = req.userId;
+  // console.log(userId);
+
+  // console.log("Doctor Being Authorized");
   // console.log(userId)
 
   let user;
@@ -61,8 +65,8 @@ export const restrictTo = (roles) => async (req, res, next) => {
 
   if (!roles.includes(user.role)) {
     return res.status(401).json({
-      Success: false,
-      Message: "You are not Authorized",
+      success: false,
+      message: "You are not Authorized",
     });
   }
 
