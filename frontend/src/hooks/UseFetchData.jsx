@@ -14,6 +14,7 @@ const UseFetchData = (url) => {
         const res = await fetch(url, {
           headers: {
             Authorization: `Bearer ${token}`,
+            
           },
         });
 
@@ -32,7 +33,7 @@ const UseFetchData = (url) => {
     };
 
     fetchData(); // Call the fetchData function
-  }, [url]);
+  }, []);
 
   return { data, error, loading };
 };

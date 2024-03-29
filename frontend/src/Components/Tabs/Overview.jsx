@@ -2,8 +2,12 @@ import React from "react";
 import DoctorsAbout from "../../Pages/Doctors/DoctorsAbout";
 
 import starPng from "../../assets/images/Star.png";
+
+
+
 const Overview = ({ doctorData }) => {
   // console.log("Overview DoctorData",doctorData)
+  const avgRating = doctorData.averageRating!==undefined?doctorData.averageRating.toFixed(1):0
   return (
     <div>
       <div className="flex items-center gap-4 mb-10">
@@ -23,7 +27,7 @@ const Overview = ({ doctorData }) => {
             <div>
               <span className=" flex items-center gap-[6px] text-headingColor leading-5 lg:text-[16px] lg:leading-6 font-semibold">
                 <img src={starPng} />
-                {doctorData.averageRating}
+                {avgRating}
               </span>
             </div>
 

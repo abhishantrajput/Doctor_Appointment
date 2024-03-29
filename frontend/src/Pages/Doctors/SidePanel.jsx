@@ -1,7 +1,51 @@
 import React from "react";
 import convertTime from "../../Utils/convertTime";
+
+import { toast } from "react-toastify";
+
+import { BASE_URL, token } from "../../config.js";
 const SidePanel = ({ ticketPrice, timeSlots, doctorId }) => {
-  console.log(timeSlots);
+  const bookingHandler = async () => {
+
+
+
+
+
+
+
+   
+    
+    try {
+
+
+
+      const res = await fetch(
+        `${BASE_URL}/bookings/checkout-session/${doctorId}`,
+        {
+          method: "post",
+          headers: {
+            Authorization:`Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message);
+      }
+
+      if (data.session.url) {
+        window.location.href = data.session.url;
+      }
+
+      console.log(data.session.url);
+      console.log(data.message)
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <div className="self-center shadow-panelShadow p-3 lg:p-5 rounded-md">
       <div className="flex items-center justify-between">
@@ -30,7 +74,9 @@ const SidePanel = ({ ticketPrice, timeSlots, doctorId }) => {
           ))}
         </ul>
       </div>
-      <button className="btn px-2 w-full rounded-md">Book Appointment</button>
+      <button className="btn px-2 w-full rounded-md" onClick={bookingHandler}>
+        Book Appointment
+      </button>
     </div>
   );
 };

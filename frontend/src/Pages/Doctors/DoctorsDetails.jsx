@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import SidePanel from "./SidePanel";
 import DoctorImg from "../../assets/images/doctor-img02.png";
@@ -6,7 +6,7 @@ import StarImg from "../../assets/images/Star.png";
 import DoctorsAbout from "./DoctorsAbout";
 import Feedback from "./Feedback";
 import { useParams } from "react-router-dom";
-import { BASE_URL } from "../../config.js";
+import { BASE_URL,UserRole } from "../../config.js";
 import UseFetchData from "../../hooks/UseFetchData.jsx";
 import Loader from "../../Components/Loader/Loading.jsx";
 import Error from "../../Components/Error/Error.jsx";
@@ -22,8 +22,7 @@ const DoctorsDetails = () => {
     error,
   } = UseFetchData(`${BASE_URL}/doctors/${id}`);
 
-
-  console.log(doctor)
+  console.log(doctor);
 
   const {
     name,
@@ -38,14 +37,28 @@ const DoctorsDetails = () => {
     timeSlots,
     _id,
 
-    
     bio,
     reviews,
+    role,
   } = doctor;
 
+  const avgRating = averageRating !== undefined ? averageRating.toFixed(1) : 0;
+
+  // const [isDoctor, setIsDoctor] = useState(false);
+
+  // useEffect(() => {
+  //   console.log("Role is",UserRole);
+  //   if (UserRole === "doctor") {
+  //     setIsDoctor(true);
+  //   }
+
+  //   if (UserRole === "patient") {
+  //     setIsDoctor(false);
+  //   }
 
 
-  const avgRating = averageRating !== undefined ? averageRating.toFixed(1): 0
+  //   console.log(isDoctor)
+  // }, [role]);
 
   return (
     <section className="">
@@ -124,9 +137,15 @@ const DoctorsDetails = () => {
               </div>
             </div>
 
-            <div className="">
-              <SidePanel ticketPrice={ticketPrice} timeSlots={timeSlots} doctorId={_id} />
-            </div>
+            {/* {!isDoctor && (
+            )} */}
+              <div className="">
+                <SidePanel
+                  ticketPrice={ticketPrice}
+                  timeSlots={timeSlots}
+                  doctorId={_id}
+                />
+              </div>
           </div>
         )}
       </div>

@@ -5,7 +5,7 @@ import Doctor from "../models/DoctorSchema.js";
 
 export const authenticate = (req, res, next) => {
   const authToken = req.headers.authorization;
-  console.log(authToken);
+  // console.log(authToken);
 
   if (!authToken || !authToken.startsWith("Bearer ")) {
     return res.status(400).json({
@@ -38,7 +38,7 @@ export const authenticate = (req, res, next) => {
     }
     return res.status(401).json({
       success: false,
-      message: "Invalid token",
+      message: "Please login ",
     });
   }
 };

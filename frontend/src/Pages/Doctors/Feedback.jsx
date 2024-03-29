@@ -1,11 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import avatarIcon from "../../assets/images/avatar-icon.png";
 import { formateDate } from "../../Utils/FormateDate";
 import { AiFillStar } from "react-icons/ai";
 import FeedbackForm from "./FeedbackForm";
+import { UserRole } from "../../config.js";
 
 const Feedback = ({ totalRating, reviews }) => {
   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
+
+  const [isPatient, setIsPatient] = useState(false);
+
+  var role = UserRole;
+  useEffect(() => {
+    console.log(typeof role);
+
+    console.log(role);
+
+    if (role === "patient") {
+      setIsPatient(true);
+    }
+
+    if (role === "doctor") {
+      setIsPatient(false);
+    }
+  }, [role]);
 
   return (
     <div>
@@ -14,7 +32,8 @@ const Feedback = ({ totalRating, reviews }) => {
           All Reviews({totalRating})
         </h4>
 
-        {reviews?.map((review, index) => (<div key={index} className="flex justify-between gap-10 mb-[30px]">
+        {reviews?.map((review, index) => (
+          <div key={index} className="flex justify-between gap-10 mb-[30px]">
             <div className="flex gap-3">
               <figure className="w-10 h-10 rounded-full ">
                 <img
@@ -42,10 +61,11 @@ const Feedback = ({ totalRating, reviews }) => {
                 <AiFillStar key={index} color="#0067FF" />
               ))}
             </div>
-          </div>))}
+          </div>
+        ))}
       </div>
 
-      {!showFeedbackForm && (
+      {!showFeedbackForm && isPatient && (
         <div className="text-center">
           <button className="btn" onClick={() => setShowFeedbackForm(true)}>
             Give Feedback
@@ -53,7 +73,7 @@ const Feedback = ({ totalRating, reviews }) => {
         </div>
       )}
 
-      {showFeedbackForm && <FeedbackForm />}
+      {showFeedbackForm && isPatient && <FeedbackForm />}
     </div>
   );
 };

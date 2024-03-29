@@ -12,7 +12,7 @@ const Profile = ({ doctorData }) => {
     name: "",
     password: "",
     email: "",
-    phone: "",
+    phone: "+91",
     bio: "",
     gender: "",
     specialization: "",

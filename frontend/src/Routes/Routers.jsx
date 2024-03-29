@@ -11,6 +11,7 @@ import NotPageFound from "../Pages/NotPageFound";
 import MyAccount from "../Dashboard/User-Account/MyAccount";
 import Dashboard from "../Dashboard/Doctor-Account/Dashboard";
 import ProtectRoute from "./ProtectRoute";
+import CheckoutSuccessPage from "../Pages/Doctors/CheckoutSuccessPage";
 import { Routes, Route } from "react-router-dom";
 
 const Routers = () => {
@@ -23,6 +24,7 @@ const Routers = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/checkout-success" element={ <CheckoutSuccessPage/>} />
       <Route
         path="/users/profile/me"
         element={
