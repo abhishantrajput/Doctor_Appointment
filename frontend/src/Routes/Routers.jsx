@@ -12,6 +12,8 @@ import MyAccount from "../Dashboard/User-Account/MyAccount";
 import Dashboard from "../Dashboard/Doctor-Account/Dashboard";
 import ProtectRoute from "./ProtectRoute";
 import CheckoutSuccessPage from "../Pages/Doctors/CheckoutSuccessPage";
+import RoomPage from "../screens/Rooms.jsx";
+import LobbyScreen from "../screens/Lobby";
 import { Routes, Route } from "react-router-dom";
 
 const Routers = () => {
@@ -25,6 +27,8 @@ const Routers = () => {
       <Route path="/register" element={<Signup />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/checkout-success" element={ <CheckoutSuccessPage/>} />
+      <Route path="/lobby" element={<ProtectRoute allowedRoles={["patient","doctor"]}><LobbyScreen/></ProtectRoute>} />
+      <Route path="/room/:id" element={<RoomPage/>} />
       <Route
         path="/users/profile/me"
         element={

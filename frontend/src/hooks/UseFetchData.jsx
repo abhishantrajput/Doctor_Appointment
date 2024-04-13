@@ -33,7 +33,7 @@ const UseFetchData = (url) => {
     };
 
     fetchData(); // Call the fetchData function
-  }, []);
+  }, [url]);
 
   return { data, error, loading };
 };
