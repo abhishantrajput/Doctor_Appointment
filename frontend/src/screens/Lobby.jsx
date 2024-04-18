@@ -33,6 +33,12 @@ const LobbyScreen = () => {
   }, [socket, handleJoinRoom]);
 
   return (
+
+
+    <section className="max-h-screen">
+
+
+
     <div className="container">
       <div className="mx-auto w-[500px]">
         <h1 className="heading text-center mt-4">Lobby</h1>
@@ -64,6 +70,7 @@ const LobbyScreen = () => {
         </form>
       </div>
     </div>
+    </section>
   );
 };
 

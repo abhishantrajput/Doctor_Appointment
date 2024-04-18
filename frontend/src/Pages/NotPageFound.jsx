@@ -7,7 +7,7 @@ import NotFoundImg from "../assets/images/notFound.svg";
 const NotPageFound = () => {
   return (
     <>
-      <section className="notFound pt-[30px]">
+      <section className="notFound pt-0 min-h-screen">
         <div className="container">
           <img src={NotFoundImg} alt="notFound" className="ml-auto mr-auto" />
           <h1>LOOKS LIKE YOU'RE LOST</h1>

@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useState } from "react";
 import ReactPlayer from "react-player";
+import { Link } from "react-router-dom";
 import peer from "../services/Peer.js";
 import { useSocket } from "../context/socketProvide.jsx";
 
@@ -110,7 +111,7 @@ const RoomPage = () => {
   ]);
 
   return (
-    <section>
+    <section className="min-h-screen">
       <div className="container">
         <h1 className="heading text-center">Room Page</h1>
         <h4 className="text-purpleColor font-bold text-center mt-5 text-[23px]">
@@ -164,7 +165,7 @@ const RoomPage = () => {
             </button>
 
 
-            <button><Link></Link></button>
+            <button className="btn"><Link>Back to Home</Link></button>
 
 
 </>

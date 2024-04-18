@@ -41,7 +41,7 @@ const Home = () => {
                 </p>
 
                 <button className="py-[10px] px-[15px] md:py-[15px] md:px-[20px] lg:px-[20] lg:py-[25px] btn font-[600] tracking-widest">
-                  Request For an Appointment
+                <Link to={"/doctors"}> Request For an Appointment</Link>
                 </button>
               </div>
 
